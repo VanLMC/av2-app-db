@@ -10,7 +10,7 @@ module.exports = (() => {
 
     router.delete("/:id", async (req, res) => {
         const id = req.params.id
-        const alunoHardskills = await alunoHardskillsController.destroy(id);
+        const alunoHardskills = await alunoHardskillsController.destroy(req.body, id);
         res.json(alunoHardskills);
     })
 

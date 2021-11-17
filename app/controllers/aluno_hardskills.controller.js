@@ -1,6 +1,6 @@
 
 const models = require('../db/models');
-
+const sequelize = require('../db/index').getConnection();
 
 exports.store = async (a,id) => {
 
@@ -18,21 +18,22 @@ exports.store = async (a,id) => {
             where: hardSkill
         });
         refsHardSkills.push(result.id);
+        const [results, metadata] = await sequelize.query(`INSERT INTO aluno_hardskill VALUES  (${model.id_usuario}, ${result.id})`);
     }
-     model.addHardSkill(refsHardSkills);
+
 
     return true;
 }
 
 
-exports.destroy = async (id) => {
-    const model = await models.aluno.findOne({
-        where: {id_usuario: id},
-        include: {association: 'hardskills'}
-    });
+exports.destroy = async (aluno, id) => {
+    // const model = await models.aluno.findOne({
+    //     where: {id_usuario: id},
+    //     include: {association: 'hardskills'}
+    // });
 
     let refsHardSkills = [];
-
+    console.log(aluno.hardskills);
 
     for (let h in aluno.hardskills){
         let hardSkill = aluno.hardskills[h];
@@ -44,11 +45,13 @@ exports.destroy = async (id) => {
 
         console.log(result)
         console.log('resuld.it', result.id);
-        refsHardSkills.push(result.id);
+        const [results, metadata] = await sequelize.query(`
+        DELETE FROM aluno_hardskill 
+        WHERE aluno_hardskill.id_hardskill = ${result.id} 
+        and aluno_hardskill.id_aluno = ${id}`);
     }
 
 
-    model.removeHardSkill(refsHardSkills);
 
     return true;
 }
