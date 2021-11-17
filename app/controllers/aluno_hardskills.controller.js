@@ -9,10 +9,6 @@ exports.store = async (a,id) => {
         include: {association: 'hardskills'}
     });
 
-    // console.log('logs')
-    // console.log(model)
-    // console.log(model.addHardSkill)
-
     let refsHardSkills = [];
 
     for (let h in a.hardskills){
@@ -25,44 +21,34 @@ exports.store = async (a,id) => {
     }
      model.addHardSkill(refsHardSkills);
 
-    // try{
-    //      //console.log('refsHardSkills')
-    //     // console.log(model.prototype)
-       
-    // }
-    // catch(err){
-    //     return false;
-    // }
-    
-
     return true;
 }
 
 
-// exports.destroy = async (id) => {
-//     const model = await models.aluno.findOne({
-//         where: {id_usuario: id},
-//         include: {association: 'hardskills'}
-//     });
+exports.destroy = async (id) => {
+    const model = await models.aluno.findOne({
+        where: {id_usuario: id},
+        include: {association: 'hardskills'}
+    });
 
-//     let refsHardSkills = [];
+    let refsHardSkills = [];
 
 
-//     for (let h in aluno.hardskills){
-//         let hardSkill = aluno.hardskills[h];
+    for (let h in aluno.hardskills){
+        let hardSkill = aluno.hardskills[h];
         
 
-//        const [result] = await models.hardskill.findOrCreate({
-//             where: hardSkill
-//         });
+       const [result] = await models.hardskill.findOrCreate({
+            where: hardSkill
+        });
 
-//         console.log(result)
-//         console.log('resuld.it', result.id);
-//         refsHardSkills.push(result.id);
-//     }
+        console.log(result)
+        console.log('resuld.it', result.id);
+        refsHardSkills.push(result.id);
+    }
 
 
-//     model.removeHardSkill(refsHardSkills);
+    model.removeHardSkill(refsHardSkills);
 
-//     return true;
-// }
+    return true;
+}

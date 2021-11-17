@@ -16,7 +16,6 @@ const Aluno = sequelize.define(name, {
     timestamps: false,
 })
 
-
 Aluno.associate = (models) => {
     Aluno.belongsTo(models.usuario, {
         foreignKey: {
@@ -35,9 +34,6 @@ Aluno.associate = (models) => {
     })
     
 }
-
-
-
 
 
 module.exports = Aluno;
