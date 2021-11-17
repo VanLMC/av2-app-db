@@ -1,39 +1,61 @@
-
 const  {DataTypes} = require("sequelize");
 const name = require("path").basename(__filename.replace(".model", ""), ".js");
 
 const sequelize = require('../index').getConnection();
 
 const AtividadeAvaliativa = sequelize.define(name, {
-    matricula: {
-        type: DataTypes.STRING(10),
+    descricao: {
+        type: DataTypes.STRING(50),
         allowNull: false,
     },
+    createdAt: {
+        type: DataTypes.DATE,
+        field: 'criado_em'
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        field: 'atualizado_em'
+    }
+
 
 }, {
     sequelize,
     tableName: name,
-    timestamps: false,
 })
 
-AtividadeAvaliativa.associate = (models) => {
-    // AtividadeAvaliativa.belongsTo(models.usuario, {
-    //     foreignKey: {
-    //         name: 'id_usuario'
-    //     },
-    //     as: 'usuario'
-    // })
 
-    // AtividadeAvaliativa.belongsToMany(models.hardskill, {
-    //     through: 'aluno_hardskill',
-    //     timestamps: false,
-    //     foreignKey: {
-    //         name: 'id_aluno'
-    //     },
-    //     as: 'hardskills'
-    // })
-    
+AtividadeAvaliativa.associate = models => {
+
+    AtividadeAvaliativa.belongsToMany(models.aluno, {
+        through: 'hardskill_atividade_avaliativa',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_atividade_avaliativa'
+        },
+        as: 'hardskills'
+    })
+
+    AtividadeAvaliativa.belongsTo(models.turma, {
+        foreignKey: {
+            name: 'id_turma'
+        },
+        as: 'turma'
+    })
+
+    AtividadeAvaliativa.hasMany(models.grupo, {
+        foreignKey: {
+            name: 'id_atividade_avaliativa'
+        },
+        as: 'grupos'
+    })
+
+    AtividadeAvaliativa.hasMany(models.avaliacaorotacao, {
+        foreignKey: {
+            name: 'id_atividade_avaliativa'
+        },
+        as: 'avaliacao360'
+    })
+
 }
-
 
 module.exports = AtividadeAvaliativa;

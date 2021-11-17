@@ -43,6 +43,13 @@ Usuario.associate = (models) => {
         as: 'aluno'
     })
 
+    Usuario.hasOne(models.professor, {
+        foreignKey: {
+            name: 'id_usuario'
+        },
+        as: 'professor'
+    })
+
     Usuario.hasMany(models.questao, {
         foreignKey: {
             name: 'id_usuario'

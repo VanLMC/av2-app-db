@@ -5,7 +5,7 @@ const name = require("path").basename(__filename.replace(".model", ""), ".js");
 const sequelize = require('../index').getConnection();
 
 const Tarefa = sequelize.define(name, {
-    matricula: {
+    descricao: {
         type: DataTypes.STRING(10),
         allowNull: false,
     },
@@ -17,22 +17,21 @@ const Tarefa = sequelize.define(name, {
 })
 
 Tarefa.associate = (models) => {
-    // Tarefa.belongsTo(models.usuario, {
-    //     foreignKey: {
-    //         name: 'id_usuario'
-    //     },
-    //     as: 'usuario'
-    // })
 
-    // Tarefa.belongsToMany(models.hardskill, {
-    //     through: 'aluno_hardskill',
-    //     timestamps: false,
-    //     foreignKey: {
-    //         name: 'id_aluno'
-    //     },
-    //     as: 'hardskills'
-    // })
-    
+    Tarefa.belongsTo(models.aluno, {
+        foreignKey: {
+            name: 'id_aluno'
+        },
+        as: 'aluno'
+    })
+
+    Tarefa.belongsTo(models.grupo, {
+        foreignKey: {
+            name: 'id_grupo'
+        },
+        as: 'grupo'
+    })
+
 }
 
 

@@ -24,6 +24,45 @@ Aluno.associate = (models) => {
         as: 'usuario'
     })
 
+    Aluno.hasMany(models.tarefa, {
+        foreignKey: {
+            name: 'id_aluno'
+        },
+        as: 'tarefas'
+    })
+
+    Aluno.belongsToMany(models.softskill, {
+        through: 'aluno_softskill',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_aluno'
+        },
+        as: 'softskill'
+    })
+
+    Aluno.belongsToMany(models.grupo, {
+        through: 'aluno_grupo',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_aluno'
+        },
+        as: 'grupos'
+    })
+
+    Aluno.hasMany(models.questaoDia, {
+        foreignKey: {
+            name: 'id_aluno'
+        },
+        as: 'questoesDoDia'
+    })
+
+    Aluno.hasMany(models.avaliacaorotacao, {
+        foreignKey: {
+            name: 'id_aluno'
+        },
+        as: 'avaliacao360'
+    })
+
     Aluno.belongsToMany(models.hardskill, {
         through: 'aluno_hardskill',
         timestamps: false,
@@ -32,6 +71,23 @@ Aluno.associate = (models) => {
         },
         as: 'hardskills'
     })
+
+    Aluno.hasOne(models.curso, {
+        foreignKey: {
+            name: 'id_curso'
+        },
+        as: 'curso'
+    })
+
+    Aluno.belongsToMany(models.turma, {
+        through: 'aluno_turma',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_aluno'
+        },
+        as: 'turmas'
+    })
+
     
 }
 

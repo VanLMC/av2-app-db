@@ -17,22 +17,33 @@ const Professor = sequelize.define(name, {
 })
 
 Professor.associate = (models) => {
-    // Professor.belongsTo(models.usuario, {
-    //     foreignKey: {
-    //         name: 'id_usuario'
-    //     },
-    //     as: 'usuario'
-    // })
+    Professor.belongsTo(models.usuario, {
+        foreignKey: {
+            name: 'id_usuario'
+        },
+        as: 'usuario'
+    })
 
-    // Professor.belongsToMany(models.hardskill, {
-    //     through: 'aluno_hardskill',
-    //     timestamps: false,
-    //     foreignKey: {
-    //         name: 'id_aluno'
-    //     },
-    //     as: 'hardskills'
-    // })
-    
+    Professor.belongsToMany(models.disciplina, {
+        through: 'professor_disciplina',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_professor'
+        },
+        as: 'disciplinas'
+    })
+
+    Professor.belongsToMany(models.disciplina, {
+        through: 'professor_turma',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_professor'
+        },
+        as: 'turmas'
+    })
+
+
+
 }
 
 

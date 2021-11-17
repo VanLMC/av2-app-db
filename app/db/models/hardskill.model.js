@@ -35,6 +35,40 @@ Hardskill.associate = models => {
         as: 'alunos'
     })
 
+    Hardskill.belongsToMany(models.aluno, {
+        through: 'disciplina_hardskill',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_hardskill'
+        },
+        as: 'disciplinas'
+    })
+
+    Hardskill.belongsToMany(models.aluno, {
+        through: 'turma_hardskill',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_hardskill'
+        },
+        as: 'turmas'
+    })
+
+    Hardskill.belongsToMany(models.aluno, {
+        through: 'hardskill_atividade_avaliativa',
+        timestamps: false,
+        foreignKey: {
+            name: 'id_hardskill'
+        },
+        as: 'Atividade avaliativa'
+    })
+
+    Hardskill.hasMany(models.questao, {
+        foreignKey: {
+            name: 'id_hardskill'
+        },
+        as: 'questoes'
+    })
+
 }
 
 module.exports = Hardskill;
